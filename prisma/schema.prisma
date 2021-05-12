@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                 Int      @id @default(autoincrement())
+  givenName          String?  @map(name: "given_name")
+  familyName         String?  @map(name: "family_name")
+  nickName           String?  @map(name: "nickname")
+  name               String?
+  email              String?  @unique
+  sub                String?
+  emailVerified      Boolean? @map(name: "email_verified")
+  idToken            String?
+  accessToken        String?
+  accessTokenScope   String?
+  accessTokenExpires Int?     @map(name: "access_token_expires")
+  createdAt          DateTime @default(now()) @map(name: "created_at")
+  updatedAt          DateTime @default(now()) @map(name: "updated_at")
+
+
+  @@map(name: "accounts")
+}
+
+model User {
+  id        Int         @id @default(autoincrement())
+  name      String?
+  password  String?
+  email     String?     @unique
+  image     String?
+  banner    String?
+  createdAt DateTime    @default(now()) @map(name: "created_at")
+  updatedAt DateTime    @default(now()) @map(name: "updated_at")
+  identity  String      @default("user")
+  detail    UserDetail?
+
+  @@map(name: "users")
+}
+
+model UserDetail {
+  id            Int          @id @default(autoincrement())
+  user          User         @relation(fields: [userId], references: [id])
+  userId        Int          @unique @map(name: "user_id")
+  myDescription String?      @map(name: "my_description")
+  myList        MyShopList[]
+  follower      Follower[]
+  following     Following[]
+
+  @@map(name: "user_detail")
+}
+
+model Follower {
+  id          Int        @id @default(autoincrement())
+  user        UserDetail @relation(fields: [userId], references: [userId])
+  userId      Int        @map(name: "user_id")
+  followerId  Int        @map(name: "follower_id")
+  getFollowAt DateTime   @default(now()) @map(name: "get_follow_at")
+
+  @@map(name: "follower")
+}
+
+model Following {
+  id          Int        @id @default(autoincrement())
+  user        UserDetail @relation(fields: [userId], references: [userId])
+  userId      Int        @map(name: "user_id")
+  followingId Int        @map(name: "following_id")
+  followAt    DateTime   @default(now()) @map(name: "follow_at")
+
+  @@map(name: "following")
+}
+
+model MyShopList {
+  id          Int          @id @default(autoincrement())
+  user        UserDetail   @relation(fields: [userId], references: [userId])
+  userId      Int          @map(name: "user_id")
+  allShop     AllShop      @relation(fields: [allShopId], references: [id])
+  allShopId   Int
+  nickname    String
+  link        String
+  category    String?
+  subCategory String?      @map(name: "sub_category")
+  comment     ShopComment?
+  bought      Boolean
+  e2          Boolean
+  e3          Boolean
+  e4          Boolean
+  private     Boolean?
+  createdAt   DateTime     @default(now()) @map(name: "created_at")
+
+  @@map(name: "my_shoplist")
+}
+
+model ShopComment {
+  id              Int        @id @default(autoincrement())
+  shopList        MyShopList @relation(fields: [shopListId], references: [id])
+  shopListId      Int        @map(name: "shoplist_id")
+  shopDescription String?    @map(name: "shop_description")
+  photo           String?
+
+  @@map(name: "shop_comment")
+}
+
+model AllShop {
+  id        Int          @id @default(autoincrement())
+  name      String       @unique
+  link      String
+  icon      String
+  addedShop MyShopList[]
+
+
+  @@map(name: "allshop")
+}

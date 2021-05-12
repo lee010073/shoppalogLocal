@@ -1,0 +1,7 @@
+.listContainer {
+  max-height: 100vh;
+}
+
+.listContainer::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,72 @@
+import prisma from "../../../database/client";
+
+export default async function (req, res) {
+  const takeFid = async (target) => {
+    const idArray = [];
+    await target.map((data) => {
+      idArray.push(data.followingId);
+    });
+    return idArray;
+  };
+
+  const mapData = async (data, array) => {
+    const allShopArray = [];
+    for await (const detail of data) {
+      const addedShopArray = [];
+      detail.number = detail.addedShop.length;
+      detail.follow = true;
+      detail.from = "onlyFd";
+
+      for await (const data of detail.addedShop) {
+        if (array.indexOf(data.userId) != -1) {
+          addedShopArray.push(data);
+        }
+      }
+      detail.addedShop = addedShopArray;
+      allShopArray.push(detail);
+    }
+    return allShopArray;
+  };
+
+  try {
+    const input = req.body.data.input;
+    const following = req.body.data.following;
+
+    const array = await takeFid(following);
+
+    const data = await prisma.allShop.findMany({
+      where: {
+        OR: [
+          { name: { contains: `${input}`, mode: "insensitive" } },
+          {
+            addedShop: {
+              some: { category: { contains: `${input}`, mode: "insensitive" } },
+            },
+          },
+          {
+            addedShop: {
+              some: {
+                subCategory: { contains: `${input}`, mode: "insensitive" },
+              },
+            },
+          },
+        ],
+        AND: { addedShop: { some: { userId: { in: array } } } },
+      },
+      include: { addedShop: true },
+    });
+
+    const mapping = await mapData(data, array);
+
+    res.status(201);
+    res.json(mapping);
+  } catch (e) {
+    console.error(e);
+
+    res.status(500);
+    res.json({ error: "Sorry unable to read from database" });
+  }
+  // finally {
+  //   await prisma.disconnect();
+  // }
+}

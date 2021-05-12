@@ -1,0 +1,29 @@
+@keyframes popDown {
+  0% {
+    // transform: translateX(50%);
+    opacity: 0;
+  }
+}
+
+.title{
+  -webkit-box-orient: vertical;
+  /* <integer> values */
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  display: -webkit-box;
+}
+.none {
+  animation: popDown 2s;
+}
+
+.food {
+  animation: popDown 2s;
+}
+
+.sports {
+  animation: popDown 2s;
+}
+
+.fashion {
+  animation: popDown 2s;
+}

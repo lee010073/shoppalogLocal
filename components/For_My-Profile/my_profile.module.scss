@@ -1,0 +1,68 @@
+@keyframes popDown {
+  0% {
+    transform: translateY(-100%);
+  }
+}
+
+.modalStyle {
+  position: absolute;
+  top: 30vh;
+  left: 30vw;
+  right: 30vw;
+  bottom: 30vh;
+  background-color: white !important;
+  border-radius: 15px;
+  animation: popDown 0.5s;
+  z-index: 3;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+.banner {
+  position: center;
+}
+
+.listContainer {
+  max-height: 100vh;
+}
+
+.listContainer::-webkit-scrollbar {
+  display: none;
+}
+
+@media screen and (max-width: 1024px) and (min-width: 768px) {
+  .modalStyle {
+    position: absolute;
+    top: 30vh;
+    left: 20vw;
+    right: 20vw;
+    bottom: 30vh;
+  }
+}
+
+@media screen and (max-width: 768px) and (min-width: 640px) {
+  .modalStyle {
+    position: absolute;
+    top: 30vh;
+    left: 15vw;
+    right: 15vw;
+    bottom: 30vh;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .modalStyle {
+    position: absolute;
+    top: 30vh;
+    left: 8vw;
+    right: 8vw;
+    bottom: 22vh;
+  }
+}

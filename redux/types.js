@@ -1,0 +1,7 @@
+export const GET_NAVBAR_NAME = "GET_NAVBAR_NAME";
+export const GET_NAVBAR_ICON = "GET_NAVBAR_ICON";
+export const GET_USER_DESCRIPTION = "GET_USER_DESCRIPTION";
+
+//trial
+export const GET_SHOP_ARRAY = "GET_SHOP_ARRAY";
+export const GET_SHOP_QUERY_ARRAY = "GET_SHOP_QUERY_ARRAY";

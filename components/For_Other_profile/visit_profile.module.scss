@@ -1,0 +1,33 @@
+@keyframes popDown {
+  0% {
+    transform: translateY(-100%);
+  }
+}
+
+.modalStyle {
+  margin-top: 20rem;
+  margin-left:auto;
+  margin-right:auto;
+  background-color: white !important;
+  border-radius: 10px;
+  animation: popDown 0.5s;
+  width:20rem;
+  height:12rem;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($color: #000000, $alpha: 0.5);
+}
+
+.listContainer {
+  max-height: 100vh;
+}
+
+.listContainer::-webkit-scrollbar {
+  display: none;
+}

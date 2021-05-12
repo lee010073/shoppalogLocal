@@ -1,0 +1,15 @@
+.listContainer {
+  max-height: 200vh;
+}
+
+.newsContainer {
+  max-height: 150vh;
+}
+
+.listContainer::-webkit-scrollbar {
+  display: none;
+}
+
+.newsContainer::-webkit-scrollbar {
+  display: none;
+}
