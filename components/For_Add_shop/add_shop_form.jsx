@@ -259,7 +259,10 @@ const Add_shop_form = (props) => {
                               <input
                                 type="checkbox"
                                 className={`absolute w-full h-full opacity-0 cursor-pointer ${styles.checkbox}`}
-                                onChange={confirmCheckBox}
+                                onClick={confirmCheckBox}
+                                {...(confirmLink == true && {
+                                  defaultChecked: true,
+                                })}
                               />
                               <div
                                 className={`hidden text-white bg-indigo-700 rounded-sm 
