@@ -507,8 +507,7 @@ function Index(props) {
                   SignUp for an Account
                 </h1>
                 <h2 className="mt-3 text-base leading-6 tracking-wide text-gray-700">
-                  Sign up an account with your Google account / Facebook account
-                  /Email (No password required, click
+                  Sign up an account with your Google account / Email account (Click
                   <span className="mx-2 font-semibold text-indigo-500 hover:text-indigo-600">
                     <Link href="/utility/aboutShoppalog">About Us</Link>
                   </span>
@@ -682,8 +681,7 @@ function Index(props) {
                 SignUp for an Account
               </h1>
               <h2 className="mt-3 text-base leading-6 tracking-wide text-center text-gray-700">
-                Sign up an account with your Google account / Facebook account
-                /Email (No password required, click
+                Sign up an account with your Google account / Email account (Click
                 <span className="mx-2 font-semibold text-indigo-500 hover:text-indigo-600">
                   <Link href="/utility/aboutShoppalog">About Us</Link>
                 </span>
