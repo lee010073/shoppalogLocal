@@ -395,7 +395,7 @@ export default function Visit_profile(props) {
                             ? "hidden"
                             : "text"
                         }
-                        placeholder="search for shops"
+                        placeholder="Search for Shops"
                         onChange={searchInputForShop}
                       />
                     </li>
@@ -405,7 +405,7 @@ export default function Visit_profile(props) {
                         id="searchInput"
                         className="hidden w-full py-3 pl-10 pr-20 mr-20 text-sm text-gray-500 bg-gray-100 border border-gray-100 rounded-md focus:outline-none focus:border-brand lg:flex xl:flex"
                         type={props.following.length == 0 ? "hidden" : "text"}
-                        placeholder="search for people he subscribed"
+                        placeholder="Search for people he/she followed"
                         onChange={searchInputForSubscribed}
                       />
                     </li>
@@ -415,7 +415,7 @@ export default function Visit_profile(props) {
                         id="searchInput"
                         className="hidden w-full py-3 pl-10 pr-20 mr-20 text-sm text-gray-500 bg-gray-100 border border-gray-100 rounded-md focus:outline-none focus:border-brand lg:flex xl:flex"
                         type={followerChange.length == 0 ? "hidden" : "text"}
-                        placeholder="Search for her followers"
+                        placeholder="Search for his/her followers"
                         onChange={searchInputForFollower}
                       />
                     </li>
@@ -433,7 +433,7 @@ export default function Visit_profile(props) {
                     type={
                       props.data.detail.myList.length == 0 ? "hidden" : "text"
                     }
-                    placeholder="Search for people you followed"
+                    placeholder="Search for Shops"
                     onChange={searchInputForShop}
                   />
                 </div>
@@ -443,7 +443,7 @@ export default function Visit_profile(props) {
                     id="searchInput"
                     className="w-full px-4 py-4 pl-4 pr-20 mb-4 text-sm text-gray-600 bg-white border-none rounded-md shadow mr-30 focus:outline-none focus:border-brand lg:flex xl:flex"
                     type={props.following.length == 0 ? "hidden" : "text"}
-                    placeholder="Search for people following you"
+                    placeholder="Search for people he/she followed"
                     onChange={searchInputForSubscribed}
                   />
                 </div>
@@ -453,7 +453,7 @@ export default function Visit_profile(props) {
                     id="searchInput"
                     className="w-full px-4 py-4 pl-4 pr-20 mb-4 text-sm text-gray-600 bg-white border-none rounded-md shadow mr-30 focus:outline-none focus:border-brand lg:flex xl:flex"
                     type={followerChange.length == 0 ? "hidden" : "text"}
-                    placeholder="Search for people following you"
+                    placeholder="Search for his/her followers"
                     onChange={searchInputForFollower}
                   />
                 </div>
