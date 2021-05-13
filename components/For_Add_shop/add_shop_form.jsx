@@ -46,21 +46,20 @@ const Add_shop_form = (props) => {
 
   const [submitEd, setSubmit] = useState(false);
 
-
-  //for add shop loading
-  const [addShopLoading,setAddShopLoading]=useState(false)
+    //for add shop loading
+    const [addShopLoading,setAddShopLoading]=useState(false)
 
   //for adding shop
 
   const { register, handleSubmit, watch, errors, control } = useForm({});
 
   const onSubmit = async (data) => {
-    setSubmit(true);
     setAddShopLoading(true)
+    setSubmit(true);
     if (data.subcategory.length > 5) {
       toast.error("Sorry, Subcategory Maximum 5 tags !! ");
-      setSubmit(false);
       setAddShopLoading(false)
+      setSubmit(false);
     } else {
       let subCatArrayValue = [];
       for (let i = 0; i < data.subcategory.length; i++) {
@@ -84,17 +83,17 @@ const Add_shop_form = (props) => {
 
       if (result === "A New Record of ecommerce shop created") {
         toast.success(result);
-        setAddShopLoading(false);
         Mixpanel.identify(props.userId);
         Mixpanel.track("Successfully Added New Site");
         Mixpanel.track("DAU usage");
+        setAddShopLoading(false);
         router.push("/");
       } else if (result == "subcategory length unable") {
         toast.error("Sorry, Subcategory Maximum 5 tags !!");
-        setAddShopLoading(false)
+        setAddShopLoading(false);
       } else {
         toast.error(result);
-        setAddShopLoading(false)
+        setAddShopLoading(false);
       }
     }
   };
@@ -112,6 +111,8 @@ const Add_shop_form = (props) => {
   const [websiteRealName, setWebsiteRealName] = useState("none");
   const [webHeader, setHeader] = useState();
   const [icon, setIcon] = useState("none");
+  const [confirmLink, setConfirmLink] = useState(false);
+  const [errorSiteRealName, setErrorSiteRealName] = useState("none");
 
   const urlWithHttp = async (data) => {
     if (data.startsWith("http")) {
@@ -127,29 +128,42 @@ const Add_shop_form = (props) => {
     if (url) {
       document.getElementById("link").value = url;
       setWebLink(url);
+
       //getting detail
       const detail = await getWebsiteData(url);
 
       if (detail === "error") {
         toast.error("Sorry! This Link is not a valid link");
+        setConfirmLink(false);
+
+        const correct = async (link) => {
+          return parse(link).hostname;
+        };
+
+        const getHostName = await correct(url);
+        setErrorSiteRealName(getHostName);
         setWebsiteRealName("none");
-        setIcon("none");
+        setIcon("no");
       } else {
+        setConfirmLink(true);
         setHeader(detail.name);
 
         if (url.includes("instagram.com/")) {
           const splitLink = parse(url).pathname.split("/")[1];
+          setErrorSiteRealName("none");
           setWebsiteRealName(`Instagram Shop - ${splitLink}`);
           document.getElementById(
             "name"
           ).value = `Instagram Shop - ${splitLink}`;
         } else if (url.includes("facebook.com/")) {
           const splitLink = parse(url).pathname.split("/")[1];
+          setErrorSiteRealName("none");
           setWebsiteRealName(`Facebook Shop - ${splitLink}`);
           document.getElementById(
             "name"
           ).value = `Facebook Shop - ${splitLink}`;
         } else {
+          setErrorSiteRealName("none");
           setWebsiteRealName(detail.name);
           document.getElementById("name").value = detail.name;
         }
@@ -199,6 +213,12 @@ const Add_shop_form = (props) => {
     Mixpanel.track("More options picked while adding site");
   };
 
+  //for confirm Checkbox
+
+  const confirmCheckBox = () => {
+    setConfirmLink(!confirmLink);
+  };
+
   return (
     <div
       className={
@@ -206,22 +226,22 @@ const Add_shop_form = (props) => {
       }
     >
       <section className="relative w-full text-gray-700 body-font">
-        <div className="w-full px-4 py-10 mx-auto bg-gray-50">
+        <div className="w-full py-10 mx-auto sm:px-4 phone:px-1 bg-gray-50">
           <div className="flex flex-col w-full mb-10 text-center">
             <h1 className="mb-4 text-2xl font-medium text-gray-900 phone:text-xl md:text-2xl title-font">
               Save and Share Your Favorite Site With Others
             </h1>
             <p className="mx-auto text-base leading-relaxed lg:w-2/3">
-              Only copy and paste required
+              Only <span className="font-semibold text-gray-800">Copy and Paste</span> required
             </p>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="w-full px-4 sm:px-12 md:px-20 lg:px-40 xl:px-60 xxl:px-96"
+            className="w-full phone:px-0 sm:px-12 md:px-20 lg:px-40 xl:px-60 xxl:px-96"
           >
             <div className="w-full ">
               <div className="flex flex-wrap ">
-                <div className="w-full px-8 py-2">
+                <div className="w-full py-2 sm:px-8 phone:px-4">
                   <div className="relative">
                     <label
                       htmlFor="name"
@@ -233,13 +253,48 @@ const Add_shop_form = (props) => {
                       {webLink == "none" ? (
                         ""
                       ) : (
-                        <button
-                          className="px-3 py-1 mb-1 text-white bg-indigo-500 rounded-md"
-                          onClick={autoCorrect}
-                        >
-                          {" "}
-                          Save Main Page instead
-                        </button>
+                        <div className="flex">
+                          <div className="flex items-center px-4">
+                            <div className="relative flex items-center justify-center flex-shrink-0 w-4 h-4 bg-white border border-gray-400 rounded-sm dark:bg-gray-800 dark:border-gray-700">
+                              <input
+                                type="checkbox"
+                                className={`absolute w-full h-full opacity-0 cursor-pointer ${styles.checkbox}`}
+                                onChange={confirmCheckBox}
+                              />
+                              <div
+                                className={`hidden text-white bg-indigo-700 rounded-sm 
+                                ${styles.check_icon}`}
+                              >
+                                <svg
+                                  className="icon icon-tabler icon-tabler-check"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width={16}
+                                  height={16}
+                                  viewBox="0 0 24 24"
+                                  strokeWidth="1.5"
+                                  stroke="currentColor"
+                                  fill="none"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                >
+                                  <path stroke="none" d="M0 0h24v24H0z" />
+                                  <path d="M5 12l5 5l10 -10" />
+                                </svg>
+                              </div>
+                            </div>
+                            <p className="ml-2 font-normal leading-4 text-gray-800 lg:mr-4 sm:text-sm phone:text-xs dark:text-gray-100 lg:font-bold">
+                              This link is correct
+                            </p>
+                          </div>
+
+                          <button
+                            className="py-1 mb-1 text-white bg-indigo-500 rounded-md phone:px-2 sm:px-3 sm:text-sm lg:font-bold phone:text-xs"
+                            onClick={autoCorrect}
+                          >
+                            {" "}
+                           Save Main Page 
+                          </button>
+                        </div>
                       )}
                     </label>
                     <input
@@ -256,7 +311,7 @@ const Add_shop_form = (props) => {
                     )}
                   </div>
                 </div>
-                <div className="w-2/3 px-8 py-2">
+                <div className="w-2/3 sm:px-8 phone:px-4">
                   <div className="relative">
                     <p
                       htmlFor="category"
@@ -278,7 +333,7 @@ const Add_shop_form = (props) => {
                     <p className="text-red-500">This field is required</p>
                   )}
                 </div>
-                <div className="w-full px-8 py-2">
+                <div className="w-full sm:px-8 phone:px-4 phone:pt-2">
                   <div className="relative">
                     <p
                       htmlFor="name"
@@ -295,9 +350,16 @@ const Add_shop_form = (props) => {
                       placeholder="How would you like to name the website ..."
                       ref={register({ required: true })}
                       defaultValue={
-                        websiteRealName === "none" ? "" : `${websiteRealName}`
+                        websiteRealName === "none" &&
+                        errorSiteRealName === "none"
+                          ? ""
+                          : websiteRealName === "none" &&
+                            errorSiteRealName !== "none"
+                          ? `${errorSiteRealName}`
+                          : `${websiteRealName}`
                       }
-                      {...(websiteRealName === "none" && { disabled: true })}
+                      {...(websiteRealName === "none" &&
+                        confirmLink == false && { disabled: true })}
                     />
                     {errors.name && (
                       <p className="text-red-500">This field is required</p>
@@ -312,7 +374,13 @@ const Add_shop_form = (props) => {
                       name="realName"
                       ref={register({ required: true })}
                       defaultValue={
-                        websiteRealName === "none" ? "" : `${websiteRealName}`
+                        websiteRealName === "none" &&
+                        errorSiteRealName === "none"
+                          ? ""
+                          : websiteRealName === "none" &&
+                            errorSiteRealName !== "none"
+                          ? `${errorSiteRealName}`
+                          : `${websiteRealName}`
                       }
                     />
                   </div>
@@ -333,7 +401,7 @@ const Add_shop_form = (props) => {
                   className={`w-full ${show == false ? styles.show : ""}`}
                   id="hidden"
                 >
-                  <div className="w-full px-8 py-2">
+                  <div className="w-full phone:pt-2 sm:px-8 phone:px-4">
                     <div className="relative">
                       <p
                         htmlFor="subcategory"
@@ -353,7 +421,7 @@ const Add_shop_form = (props) => {
                       />
                     </div>
                   </div>
-                  <div className="w-full px-8 py-2">
+                  <div className="w-full sm:px-8 phone:px-4 phone:pt-2">
                     <div className="relative">
                       <p
                         htmlFor="comment"
@@ -370,7 +438,7 @@ const Add_shop_form = (props) => {
                       ></textarea>
                     </div>
                   </div>
-                  <div className="w-full px-8 py-2">
+                  <div className="w-full sm:px-8 phone:px-4 phone:pt-2">
                     <div className="relative">
                       <p
                         htmlFor="message"
@@ -405,45 +473,50 @@ const Add_shop_form = (props) => {
                 {show ? (
                   <button
                     onClick={clickMore}
-                    className="px-4 py-2 mb-8 ml-8 font-bold text-white bg-indigo-500 border-2 rounded-lg hover:bg-indigo-600"
+                    className="px-4 py-2 mt-4 mb-8 font-bold text-white bg-indigo-500 border-2 rounded-lg phone:ml-4 sm:ml-8 hover:bg-indigo-600 "
                   >
                     Hide Option
                   </button>
                 ) : (
                   <button
                     onClick={clickMore}
-                    className="px-4 py-2 mt-4 mb-8 ml-8 font-bold text-white bg-indigo-500 border-2 rounded-lg hover:bg-indigo-600"
+                    className="px-4 py-2 mt-4 mb-8 font-bold text-white bg-indigo-500 border-2 rounded-lg phone:ml-4 sm:ml-8 hover:bg-indigo-600"
                   >
                     More Option
                   </button>
                 )}
 
                 <div className="w-full p-2">
-                  {addShopLoading?
+                {addShopLoading?
+                 <button
+                 type="submit"
+                 className={`flex px-8 py-2 mx-auto text-lg font-bold text-white border-0 rounded-md focus:outline-none ${
+                   submitEd === true || confirmLink == false
+                     ? "bg-gray-300 animate-pulse cursor-not-allowed"
+                     : "bg-indigo-500 hover:bg-indigo-600 animate-pulse cursor-not-allowed"
+                 }`}
+                 {...(submitEd === true ||
+                   (confirmLink == false && {
+                     disabled: true,
+                   }))}
+                    >
+                 Processing...
+                  </button>:
                   <button
                     type="submit"
-                    className="flex px-8 py-4 mx-auto text-lg font-bold text-white bg-indigo-600 border-0 rounded-md cursor-not-allowed focus:outline-none animate-pulse"
-                    {...(submitEd === true && { disabled: true })}
+                    className={`flex px-8 py-2 mx-auto text-lg font-bold text-white border-0 rounded-md focus:outline-none ${
+                      submitEd === true || confirmLink == false
+                        ? "bg-gray-300"
+                        : "bg-indigo-500 hover:bg-indigo-600"
+                    }`}
+                    {...(submitEd === true ||
+                      (confirmLink == false && {
+                        disabled: true,
+                      }))}
                   >
-                    Processing ...
+                    Submit
                   </button>
-                  :
-                  <button
-                    type="submit"
-                    className="flex py-4 mx-auto text-lg font-bold text-white bg-indigo-500 border-0 rounded-md px-14 focus:outline-none hover:bg-indigo-600"
-                    {...(submitEd === true && { disabled: true })}
-                  >
-                    Submit
-                  </button> 
                   }
-                
-                  {/* <button
-                    type="submit"
-                    className="flex px-8 py-3 mx-auto text-lg font-bold text-white bg-indigo-500 border-0 rounded-md focus:outline-none hover:bg-indigo-600"
-                    {...(submitEd === true && { disabled: true })}
-                  >
-                    Submit
-                  </button> */}
                 </div>
               </div>
             </div>

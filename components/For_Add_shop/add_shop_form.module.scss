@@ -1,3 +1,7 @@
 .show {
   display: none;
 }
+
+.checkbox:checked + .check_icon {
+  display: flex;
+}
