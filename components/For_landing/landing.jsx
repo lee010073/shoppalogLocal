@@ -172,17 +172,15 @@ function Index(props) {
       </nav>
 
       {/* section for hero */}
-      <section className="pt-16 mx-auto bg-white max-w-8xl sm:mx-4 lg:mx-4 xl:mx-10">
+      <section className="pt-2 mx-auto bg-white max-w-8xl sm:mx-4 lg:mx-4 xl:mx-10">
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col justify-center w-full px-4 md:w-1/2 lg:w-6/12 md:px-8">
             <p className="pt-6 pb-4 text-2xl font-extrabold tracking-normal text-gray-800 md:text-3xl lg:text-4xl xl:text-6xl xxl:mr-20">
               Shop Online Effectively with the{" "}
-              <span className="text-indigo-500">Footprints</span> from the people you followed
+              <span className="text-indigo-500">Footprints</span> from other people
             </p>
             <p className="pt-4 text-sm font-medium text-gray-600 md:text-base xl:text-xl xl:leading-normal">
-              With <span className="font-bold text-indigo-500">SHOPPALOG</span>, shopping sites recommended from people you
-              followed will{" "}
-              <span className="text-indigo-500">"Top your search result" </span>
+            <span className="text-indigo-500">Shoppalog</span> is a tool that allows people to bookmark and follow others' favouite shopping sites
             </p>
             <div className="flex mt-12 mb-6 md:mb-8 md:mb-0">
               <a
@@ -192,6 +190,9 @@ function Index(props) {
               >
                 Sign In / Sign Up
               </a>
+            </div>
+            <div className="mb-6 ">
+            <a href="https://www.producthunt.com/posts/shoppalog?utm_source=badge-review&utm_medium=badge&utm_souce=badge-shoppalog#discussion-body" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/review.svg?post_id=295964&theme=light" alt="Shoppalog - shop online effectievly by following others' footprints | Product Hunt"   className=" phone:h-10 sm:h-12 md:h-14 lg:h-16"/></a>
             </div>
           </div>
           <div className="relative pt-12 mx-4 lg:w-6/12 md:w-1/2 md:mx-4 lg:ml-20 md:mr-0 md:pt-0">
