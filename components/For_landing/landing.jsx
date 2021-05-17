@@ -175,9 +175,8 @@ function Index(props) {
       <section className="pt-2 mx-auto bg-white max-w-8xl sm:mx-4 lg:mx-4 xl:mx-10">
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col justify-center w-full px-4 md:w-1/2 lg:w-6/12 md:px-8">
-            <p className="pt-6 pb-4 text-2xl font-extrabold tracking-normal text-gray-800 md:text-3xl lg:text-4xl xl:text-6xl xxl:mr-20">
-              Shop Online Effectively with the{" "}
-              <span className="text-indigo-500">Footprints</span> from other people
+            <p className="pt-6 pb-2 text-3xl font-extrabold text-gray-700 xl:leading-tight md:text-3xl lg:text-4xl xl:text-6xl xxl:mr-20 ">
+              Create and share your <span className="text-indigo-500">Shopping Style</span> with <span className="text-gray-700">Shoppalog</span>
             </p>
             <p className="pt-4 text-sm font-medium text-gray-600 md:text-base xl:text-xl xl:leading-normal">
             <span className="text-indigo-500">Shoppalog</span> is a tool that allows people to bookmark and follow others' favouite shopping sites
@@ -307,8 +306,8 @@ function Index(props) {
       </section>
 
       {/* How it works  */}
-      <div className="container px-4 py-24 mx-auto f-f-p xl:px-0">
-        <h1 className="text-3xl tracking-wider text-center text-gray-900 lg:text-5xl">
+      <div className="container px-4 py-10 mx-auto f-f-p xl:px-0">
+        <h1 className="font-sans text-3xl tracking-wider text-center text-gray-700 lg:text-5xl">
           How Shoppalog works?
         </h1>
         <div className="md:mt-24 f-f-p">
@@ -1030,21 +1029,3 @@ function Index(props) {
 
 export default Index;
 
-{
-  /* <path
-d="M96.709 92.0553V111.539"
-stroke="white"
-strokeWidth={2}
-strokeMiterlimit={10}
-strokeLinecap="round"
-/>
-<path
-d="M106.49 102.31H87.2432"
-stroke="white"
-strokeWidth={2}
-strokeMiterlimit={10}
-strokeLinecap="round"
-/> */
-}
-
-// #CBD5E0
